@@ -64,12 +64,31 @@
       :floorData="floor3"
       :floorTitle="floorName.floor3"
     ></floor-component>
+    <!--Hot Area-->
+    <div class="hot-area">
+      <div class="hot-title">热卖商品</div>
+      <div class="hot-goods">
+        <van-list>
+          <van-row gutter="20">
+            <van-col span="12" v-for="(item, index) in hotGoods" :key="index">
+              <goods-info
+                :goodsPrice="item.price"
+                :goodsImage="item.image"
+                :goodsName="item.name"
+              ></goods-info>
+            </van-col>
+          </van-row>
+        </van-list>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import floorComponent from "../component/floorComponent";
+import goodsInfo from "../component/goodsInfoComponent";
+import url from "@/serviceAPI.config.js";
 import { toMoney } from "@/filter/moneyFilter.js";
 import "swiper/dist/css/swiper.css";
 export default {
@@ -99,7 +118,8 @@ export default {
       floor1: [],
       floor2: [],
       floor3: [],
-      floorName: {}
+      floorName: {},
+      hotGoods: [] //热卖商品
     };
   },
   filters: {
@@ -107,10 +127,13 @@ export default {
       return toMoney(money);
     }
   },
-  components: { swiper, swiperSlide, floorComponent },
+
+  //组件  ··········································
+  components: { swiper, swiperSlide, floorComponent, goodsInfo },
+
   created() {
     this.axios({
-      url: "http://localhost:3000/data",
+      url: url.getShoppingMallInfo,
       method: "get"
     })
       .then(res => {
@@ -123,6 +146,7 @@ export default {
           this.floor2 = data.floor2;
           this.floor3 = data.floor3;
           this.floorName = data.floorName;
+          this.hotGoods = data.hotGoods;
         }
         console.log(res);
       })
@@ -190,5 +214,11 @@ export default {
     font-size: 12px;
     text-align: center;
   }
+}
+.hot-area {
+  text-align: center;
+  font-size: 14px;
+  height: 1.8rem;
+  line-height: 1.8rem;
 }
 </style>
