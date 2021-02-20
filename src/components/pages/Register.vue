@@ -1,40 +1,67 @@
 <template>
   <div class="register">
-    <van-nav-bar title="用户注册"
-                 left-text="返回"
-                 left-arrow
-                 @click-left="goBack" />
+    <van-nav-bar
+      title="用户注册"
+      left-text="返回"
+      left-arrow
+      @click-left="goBack"
+    />
     <div class="register-panel">
-      <van-field v-model="userName"
-                 label="用户名"
-                 placeholder="请输入用户名"
-                 required
-                 clearable />
-      <van-field v-model="password"
-                 label="密码"
-                 type="password"
-                 placeholder="请输入密码"
-                 required
-                 clearable />
+      <van-field
+        v-model="userName"
+        label="用户名"
+        placeholder="请输入用户名"
+        required
+        clearable
+      />
+      <van-field
+        v-model="password"
+        label="密码"
+        type="password"
+        placeholder="请输入密码"
+        required
+        clearable
+      />
       <div class="register-button">
-        <van-button type="primary"
-                    size="large">注册</van-button>
+        <van-button type="primary" @click="axiosRegister" size="large"
+          >注册</van-button
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import url from "@/serviceAPI.config.js";
+import { Toast } from "vant";
 export default {
-  data () {
+  data() {
     return {
       userName: "",
-      password: ''
+      password: ""
     };
   },
   methods: {
-    goBack () {
-      this.$router.go(-1)
+    goBack() {
+      this.$router.go(-1);
+    },
+    axiosRegister() {
+      this.axios({
+        url: url.registerUser,
+        method: "post",
+        data: {
+          userName: this.userName,
+          password: this.password
+        }
+      }).then(res => {
+        console.log(res);
+        if (res.data.code === 200) {
+          Toast.success(res.data.msg);
+        } else {
+          Toast.fail("注册失败");
+        }
+        console.log(res.data.msg);
+      });
     }
   }
 };

@@ -11,7 +11,7 @@ import {
   Lazyload,
   List,
   Field,
-  NavBar
+  NavBar,
 } from 'vant'
 Vue.prototype.axios = axios
 
