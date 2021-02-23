@@ -2,7 +2,8 @@ const BASE_URL = "http://localhost:3000/"
 const URL = {
   getShoppingMallInfo: BASE_URL + 'data',
   getGoodsInfo: BASE_URL + 'getGoodsInfo',
-  registerUser: BASE_URL + 'user/register'
+  registerUser: BASE_URL + 'user/register',
+  login: BASE_URL + 'user/login'
 }
 
 module.exports = URL

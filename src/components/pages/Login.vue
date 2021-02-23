@@ -1,12 +1,12 @@
 <template>
   <div class="register">
     <van-nav-bar
-      title="用户注册"
+      title="用户登录"
       left-text="返回"
       left-arrow
       @click-left="goBack"
     />
-    <div class="register-panel">
+    <div class="login-panel">
       <van-field
         v-model="userName"
         label="用户名"
@@ -24,13 +24,13 @@
         clearable
         :error-message="passworErrorMsg"
       />
-      <div class="register-button">
+      <div class="login-button">
         <van-button
           type="primary"
-          @click="registerAction"
+          @click="loginAction"
           size="large"
           :loading="openLoading"
-          >注册</van-button
+          >登录</van-button
         >
       </div>
     </div>
@@ -50,33 +50,57 @@ export default {
       passworErrorMsg: "" //密码出错提示
     };
   },
+  created() {
+    if (localStorage.userInfo) {
+      Toast.success("您已经登录过了");
+      this.$router.push("/");
+    }
+  },
   methods: {
     goBack() {
       this.$router.go(-1);
     },
-    registerAction() {
-      this.checkForm() && this.axiosRegister();
+    loginAction() {
+      this.checkForm() && this.axiosLogin();
     },
-    axiosRegister() {
+    axiosLogin() {
       this.openLoading = true;
       this.axios({
-        url: url.registerUser,
+        url: url.login,
         method: "post",
         data: {
           userName: this.userName,
           password: this.password
         }
-      }).then(res => {
-        console.log(res);
-        if (res.data.code === 200) {
-          Toast.success(res.data.msg);
-          this.$router.push("/");
-        } else {
+      })
+        .then(res => {
+          if (res.data.code == 200 && res.data.msg) {
+            new Promise(res => {
+              localStorage.userInfo = {
+                userName: this.userName
+              };
+              setTimeout(() => {
+                res();
+              }, 500);
+            })
+              .then(() => {
+                Toast.success("登录成功");
+                this.$router.push("/");
+              })
+              .catch(err => {
+                Toast.fail("登录状态保存失败");
+                console.log(err);
+              });
+          } else {
+            Toast.fail("登录失败,请检查账号密码是否正确");
+            this.openLoading = false;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          Toast.fail("登录失败");
           this.openLoading = false;
-          Toast.fail("注册失败");
-        }
-        console.log(res.data.msg);
-      });
+        });
     },
     //表单验证方法
     checkForm() {
@@ -100,13 +124,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.register-panel {
+.login-panel {
   width: 96%;
   border-radius: 5px;
   margin: 20px auto;
   padding-bottom: 80px;
 }
-.register-button {
+.login-button {
   padding-top: 10px;
 }
 </style>
