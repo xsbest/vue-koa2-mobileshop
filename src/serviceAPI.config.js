@@ -3,7 +3,8 @@ const URL = {
   getShoppingMallInfo: BASE_URL + 'data',
   getGoodsInfo: BASE_URL + 'getGoodsInfo',
   registerUser: BASE_URL + 'user/register',
-  login: BASE_URL + 'user/login'
+  getDetailGoodsInfo: BASE_URL + 'goods/getDetailGoodsInfo',
+
 }
 
 module.exports = URL
