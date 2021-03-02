@@ -1,37 +1,30 @@
 <template>
   <div class="register">
-    <van-nav-bar
-      title="用户登录"
-      left-text="返回"
-      left-arrow
-      @click-left="goBack"
-    />
+    <van-nav-bar title="用户登录"
+                 left-text="返回"
+                 left-arrow
+                 @click-left="goBack" />
     <div class="login-panel">
-      <van-field
-        v-model="userName"
-        label="用户名"
-        placeholder="请输入用户名"
-        required
-        clearable
-        :error-message="userNameErrorMsg"
-      />
-      <van-field
-        v-model="password"
-        label="密码"
-        type="password"
-        placeholder="请输入密码"
-        required
-        clearable
-        :error-message="passworErrorMsg"
-      />
+      <van-field v-model="userName"
+                 label="用户名"
+                 placeholder="请输入用户名"
+                 required
+                 clearable
+                 :error-message="userNameErrorMsg" />
+      <van-field v-model="password"
+                 label="密码"
+                 type="password"
+                 placeholder="请输入密码"
+                 required
+                 clearable
+                 :error-message="passworErrorMsg" />
       <div class="login-button">
-        <van-button
-          type="primary"
-          @click="loginAction"
-          size="large"
-          :loading="openLoading"
-          >登录</van-button
-        >
+        <van-button type="primary"
+                    @click="loginAction"
+                    size="large"
+                    :loading="openLoading">登录</van-button>
+        <van-button @click="$router.push('/register')"
+                    size="large">注册</van-button>
       </div>
     </div>
   </div>
@@ -41,7 +34,7 @@
 import url from "@/serviceAPI.config.js";
 import { Toast } from "vant";
 export default {
-  data() {
+  data () {
     return {
       userName: "",
       password: "",
@@ -50,20 +43,20 @@ export default {
       passworErrorMsg: "" //密码出错提示
     };
   },
-  created() {
+  created () {
     if (localStorage.userInfo) {
       Toast.success("您已经登录过了");
       this.$router.push("/");
     }
   },
   methods: {
-    goBack() {
+    goBack () {
       this.$router.go(-1);
     },
-    loginAction() {
+    loginAction () {
       this.checkForm() && this.axiosLogin();
     },
-    axiosLogin() {
+    axiosLogin () {
       this.openLoading = true;
       this.axios({
         url: url.login,
@@ -85,7 +78,7 @@ export default {
             })
               .then(() => {
                 Toast.success("登录成功");
-                this.$router.push("/");
+                this.$router.push("/main");
               })
               .catch(err => {
                 Toast.fail("登录状态保存失败");
@@ -103,7 +96,7 @@ export default {
         });
     },
     //表单验证方法
-    checkForm() {
+    checkForm () {
       let isOk = true;
       if (this.userName.length < 5) {
         this.userNameErrorMsg = "用户名不能小于5位";
