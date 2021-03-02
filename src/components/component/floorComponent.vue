@@ -2,20 +2,52 @@
   <div class="floor">
     <div class="floor-title">{{ floorTitle }}</div>
     <div class="floor-anomaly">
-      <div class="floor-one">
+      <div
+        class="floor-one"
+        @click="
+          $router.push({
+            path: '/goods',
+            query: { goodsId: floorData0.goodsId }
+          })
+        "
+      >
         <img :src="floorData0.image" width="100%" />
       </div>
       <div>
-        <div class="floor-two">
+        <div
+          class="floor-two"
+          @click="
+            $router.push({
+              path: '/goods',
+              query: { goodsId: floorData1.goodsId }
+            })
+          "
+        >
           <img :src="floorData1.image" width="100%" />
         </div>
-        <div>
+        <div
+          @click="
+            $router.push({
+              path: '/goods',
+              query: { goodsId: floorData2.goodsId }
+            })
+          "
+        >
           <img :src="floorData2.image" width="100%" />
         </div>
       </div>
     </div>
     <div class="floor-rule">
-      <div v-for="(item, index) in floorData.slice(3)" :key="index">
+      <div
+        v-for="(item, index) in floorData.slice(3)"
+        :key="index"
+        @click="
+          $router.push({
+            path: '/goods',
+            query: { goodsId: item.goodsId }
+          })
+        "
+      >
         <img :src="item.image" width="100%" />
       </div>
     </div>

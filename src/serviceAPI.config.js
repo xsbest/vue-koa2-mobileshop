@@ -7,7 +7,7 @@ const URL = {
   getDetailGoodsInfo: BASE_URL + 'goods/getDetailGoodsInfo',
   getCategoryList: BASE_URL + 'goods/getCategoryList',
   getCategorySubList: BASE_URL + 'goods/getCategorySubList',
-  getGoodsLisByCategorySuId: BASE_URL + 'goods/getGoodsLisByCategorySuId',
+  getGoodsListByCategorySubId: BASE_URL + 'goods/getGoodsListByCategorySubId',
 }
 
 module.exports = URL

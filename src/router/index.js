@@ -1,39 +1,37 @@
 import Router from 'vue-router'
 import Vue from 'vue'
-import ShoppingMall from '@/components/pages/shoppingMall'
-import Register from '@/components/pages/Register'
-import Login from '@/components/pages/Login'
-import Goods from '@/components/pages/Goods'
-import CategoryList from '@/components/pages/CategoryList'
-
-
 
 Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path: '/',
-      name: 'ShoppingMall',
-      component: ShoppingMall
-    }, {
-      path: '/register',
-      name: 'Register',
-      component: Register
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/goods',
-      name: 'Goods',
-      component: Goods
-    },
-    {
-      path: '/categoryList',
-      name: 'CategoryList',
-      component: CategoryList
-    }
+    path: '/',
+    name: 'ShoppingMall',
+    component: () => import('@/components/pages/shoppingMall')
+  }, {
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/components/pages/Register')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/components/pages/Login')
+  },
+  {
+    path: '/goods',
+    name: 'Goods',
+    component: () => import('@/components/pages/Goods')
+  },
+  {
+    path: '/categoryList',
+    name: 'CategoryList',
+    component: () => import('@/components/pages/CategoryList')
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: () => import('@/components/pages/Cart')
+  },
   ]
 })

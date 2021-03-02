@@ -14,13 +14,14 @@ import {
   NavBar,
   Tab,
   Tabs,
-  PullRefresh
+  PullRefresh,
+  Stepper
 } from 'vant'
 Vue.prototype.axios = axios
 
 Vue.use(Button).use(Row).use(Col).use(Swipe)
   .use(SwipeItem).use(Lazyload).use(List).use(Field)
-  .use(NavBar).use(Tab).use(Tabs).use(PullRefresh)
+  .use(NavBar).use(Tab).use(Tabs).use(PullRefresh).use(Stepper)
 Vue.config.productionTip = false
 
 new Vue({
